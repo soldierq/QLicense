@@ -7,30 +7,50 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
 
 
 namespace QLicense
 {
+    /// <summary>
+    /// Usage Guide:
+    /// Command for creating the certificate
+    /// >> makecert -r -pe -sk "LIC_XML_SIGN_KEY" -n "CN=<YourAppName>" -$ commercial -cy authority -sky signature -ss my -sr currentuser
+    /// Then export the cert with private key from key store with password above
+    /// Also export another cert with only public key
+    /// </summary>
     public class LicenseHandler
     {
-        
+        public enum LicenseStatus
+        {
+            UNDEFINED,
+            VALID,
+            INVALID,
+            EXPIRED,            
+            CRACKED
+        }
+
         public static string GetHardwareID()
         {
             return HardwareInfo.GenerateDeviceId();
         }
 
-        public static string GenerateLicenseBASE64String(string licenseObjectXMLString, string certFilePath, string certFilePwd)
+        public static string GenerateLicenseBASE64String(LicenseEntity lic, string certPrivateKeyFilePath, string certFilePwd)
         {
-            //Command for creating the certificate
-            //>> makecert -r -pe -sk "LIC_XML_SIGN_KEY" -n "CN=DummyDocAuto" -$ commercial -cy authority -sky signature -ss my -sr currentuser
-            //Then export the cert with private key from key store with password above
-            //Also export another cert with only public key
+            //Serialize license object into XML                    
             XmlDocument _licenseObject = new XmlDocument();
-            _licenseObject.LoadXml(licenseObjectXMLString);
+            using (StringWriter _writer = new StringWriter())
+            {
+                XmlSerializer _serializer = new XmlSerializer(typeof(LicenseEntity));
 
+                _serializer.Serialize(_writer, lic);
+
+                _licenseObject.LoadXml(_writer.ToString());
+            }
 
             //Get RSA key from certificate
-            X509Certificate2 cert = new X509Certificate2(certFilePath, certFilePwd);
+            X509Certificate2 cert = new X509Certificate2(certPrivateKeyFilePath, certFilePwd);
 
             RSACryptoServiceProvider rsaKey = (RSACryptoServiceProvider)cert.PrivateKey;
 
@@ -42,19 +62,30 @@ namespace QLicense
         }
 
 
-        public static string GetLicenseObjectXMLFromBASE64String(string licenseObject, string certFilePath)
+        public static LicenseEntity ParseLicenseFromBASE64String(string licenseString, string certPubKeyFilePath, out LicenseStatus licStatus)
         {
+            licStatus = LicenseStatus.UNDEFINED;
+
+            if (string.IsNullOrWhiteSpace(licenseString))
+            {
+                licStatus = LicenseStatus.CRACKED;
+                return null;
+            }
+
+            string _licXML = string.Empty;
+            LicenseEntity _lic = null;
+
             try
             {
                 //Get RSA key from certificate
-                X509Certificate2 cert = new X509Certificate2(certFilePath);
+                X509Certificate2 cert = new X509Certificate2(certPubKeyFilePath);
                 RSACryptoServiceProvider rsaKey = (RSACryptoServiceProvider)cert.PublicKey.Key;
 
                 XmlDocument xmlDoc = new XmlDocument();
 
                 // Load an XML file into the XmlDocument object.
                 xmlDoc.PreserveWhitespace = true;
-                xmlDoc.LoadXml(Encoding.UTF8.GetString(Convert.FromBase64String(licenseObject)));
+                xmlDoc.LoadXml(Encoding.UTF8.GetString(Convert.FromBase64String(licenseString)));
 
                 // Verify the signature of the signed XML.            
                 if (VerifyXml(xmlDoc, rsaKey))
@@ -62,19 +93,35 @@ namespace QLicense
                     XmlNodeList nodeList = xmlDoc.GetElementsByTagName("Signature");
                     xmlDoc.DocumentElement.RemoveChild(nodeList[0]);
 
-                    return xmlDoc.OuterXml;
+                    _licXML = xmlDoc.OuterXml;
+
+                    //Deserialize license
+                    XmlSerializer _serializer = new XmlSerializer(typeof(LicenseEntity));
+                    using (StringReader _reader = new StringReader(_licXML))
+                    {
+                        _lic = (LicenseEntity)_serializer.Deserialize(_reader);
+                    }
+
+                    if (_lic.ExpiryDate >= DateTime.Now.Date)
+                    {
+                        licStatus = LicenseStatus.VALID;
+                    }
+                    else
+                    {
+                        licStatus = LicenseStatus.EXPIRED;
+                    }
                 }
                 else
                 {
-                    return string.Empty;
+                    licStatus = LicenseStatus.INVALID;
                 }
             }
             catch
             {
-                return string.Empty;
+                licStatus = LicenseStatus.CRACKED;
             }
 
-
+            return _lic;
         }
 
         // Sign an XML file. 
@@ -156,10 +203,6 @@ namespace QLicense
             return signedXml.CheckSignature(Key);
         }
 
-        public static bool ValidateHardwareID(string hardwareId)
-        {
-            return HardwareInfo.ValidateDeviceID(hardwareId);
-        }
     }
 
 }

@@ -134,7 +134,7 @@ namespace QLicense
             return _value;            
         }
 
-        public static bool ValidateDeviceID(string deviceId)
+        public static bool ValidateDeviceIDFormat(string deviceId)
         {            
             string[] _ids = deviceId.Split('-');
 
