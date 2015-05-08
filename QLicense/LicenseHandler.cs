@@ -21,20 +21,20 @@ namespace QLicense
     /// Also export another cert with only public key
     /// </summary>
     public class LicenseHandler
-    {    
+    {
 
-        public static string GetHardwareID()
+        public static string GenerateUUID(string appName)
         {
-            return HardwareInfo.GenerateDeviceId();
+            return HardwareInfo.GenerateUUID(appName);
         }
 
-        public static string GenerateLicenseBASE64String<T>(T lic, string certPrivateKeyFilePath, string certFilePwd)
+        public static string GenerateLicenseBASE64String(LicenseEntity lic, string certPrivateKeyFilePath, string certFilePwd)
         {
             //Serialize license object into XML                    
             XmlDocument _licenseObject = new XmlDocument();
             using (StringWriter _writer = new StringWriter())
             {
-                XmlSerializer _serializer = new XmlSerializer(typeof(LicenseEntity), new Type[]{typeof(T)});
+                XmlSerializer _serializer = new XmlSerializer(typeof(LicenseEntity), new Type[] { lic.GetType() });
 
                 _serializer.Serialize(_writer, lic);
 
@@ -54,18 +54,18 @@ namespace QLicense
         }
 
 
-        public static T ParseLicenseFromBASE64String<T>(string licenseString, string certPubKeyFilePath, out LicenseStatus licStatus)
+        public static LicenseEntity ParseLicenseFromBASE64String(Type licenseObjType, string licenseString, string certPubKeyFilePath, out LicenseStatus licStatus)
         {
             licStatus = LicenseStatus.UNDEFINED;
 
             if (string.IsNullOrWhiteSpace(licenseString))
             {
                 licStatus = LicenseStatus.CRACKED;
-                return default(T);
+                return null;
             }
 
             string _licXML = string.Empty;
-            T _lic = default(T);
+            LicenseEntity _lic = null;
 
             try
             {
@@ -88,10 +88,10 @@ namespace QLicense
                     _licXML = xmlDoc.OuterXml;
 
                     //Deserialize license
-                    XmlSerializer _serializer = new XmlSerializer(typeof(LicenseEntity),new Type[]{typeof(T)});
+                    XmlSerializer _serializer = new XmlSerializer(typeof(LicenseEntity), new Type[] { licenseObjType });
                     using (StringReader _reader = new StringReader(_licXML))
                     {
-                        _lic = (T)_serializer.Deserialize(_reader);
+                        _lic = (LicenseEntity)_serializer.Deserialize(_reader);
                     }
 
                     licStatus = LicenseStatus.VALID;
@@ -188,9 +188,9 @@ namespace QLicense
             return signedXml.CheckSignature(Key);
         }
 
-        public static bool ValidateDeviceIDFormat(string deviceId)
+        public static bool ValidateUUIDFormat(string deviceId)
         {
-            return HardwareInfo.ValidateDeviceIDFormat(deviceId);
+            return HardwareInfo.ValidateUUIDFormat(deviceId);
         }
     }
 

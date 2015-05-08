@@ -32,7 +32,10 @@ namespace ActivationControls4Win
 
         private void lnkCopy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Clipboard.SetText(txtLicense.Text);
+            if (!string.IsNullOrWhiteSpace(txtLicense.Text))
+            {
+                Clipboard.SetText(txtLicense.Text);
+            }
         }
 
         private void lnkSaveToFile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

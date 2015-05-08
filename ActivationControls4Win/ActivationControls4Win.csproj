@@ -30,6 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ActivationControls4Win.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,6 +55,7 @@
       <DependentUpon>LicenseActivateControl.cs</DependentUpon>
     </Compile>
     <Compile Include="LicenseGeneratedEventArgs.cs" />
+    <Compile Include="LicenseSettingsValidatingEventArgs.cs" />
     <Compile Include="LicenseSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -81,6 +88,9 @@
       <Project>{1980e43f-c5e4-4a2b-95a6-1aebdc7ee2b7}</Project>
       <Name>QLicense</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ActivationControls4Win.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

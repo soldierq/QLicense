@@ -34,7 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lnkCopy = new System.Windows.Forms.LinkLabel();
             this.lnkMailSN = new System.Windows.Forms.LinkLabel();
-            this.txtUID = new System.Windows.Forms.TextBox();
+            this.txtUUID = new System.Windows.Forms.TextBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -71,7 +71,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.lnkCopy);
             this.groupBox1.Controls.Add(this.lnkMailSN);
-            this.groupBox1.Controls.Add(this.txtUID);
+            this.groupBox1.Controls.Add(this.txtUUID);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(398, 90);
@@ -100,6 +100,7 @@
             this.lnkCopy.TabStop = true;
             this.lnkCopy.Text = "复制到剪贴板";
             this.lnkCopy.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.lnkCopy.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCopy_LinkClicked);
             // 
             // lnkMailSN
             // 
@@ -113,18 +114,19 @@
             this.lnkMailSN.TabStop = true;
             this.lnkMailSN.Text = "邮件发送序列号";
             this.lnkMailSN.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.lnkMailSN.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkMailSN_LinkClicked);
             // 
-            // txtUID
+            // txtUUID
             // 
-            this.txtUID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtUUID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtUID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUID.Location = new System.Drawing.Point(7, 41);
-            this.txtUID.Name = "txtUID";
-            this.txtUID.ReadOnly = true;
-            this.txtUID.Size = new System.Drawing.Size(381, 20);
-            this.txtUID.TabIndex = 1;
-            this.txtUID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUUID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUUID.Location = new System.Drawing.Point(7, 41);
+            this.txtUUID.Name = "txtUUID";
+            this.txtUUID.ReadOnly = true;
+            this.txtUUID.Size = new System.Drawing.Size(381, 20);
+            this.txtUUID.TabIndex = 1;
+            this.txtUUID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // LicenseActivateControl
             // 
@@ -151,6 +153,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel lnkCopy;
         private System.Windows.Forms.LinkLabel lnkMailSN;
-        private System.Windows.Forms.TextBox txtUID;
+        private System.Windows.Forms.TextBox txtUUID;
     }
 }

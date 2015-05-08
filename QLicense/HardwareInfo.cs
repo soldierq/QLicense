@@ -97,11 +97,11 @@ namespace QLicense
         /// Combine CPU ID, Disk C Volume Serial Number and Motherboard Serial Number as device Id
         /// </summary>
         /// <returns></returns>
-        public static string GenerateDeviceId()
+        public static string GenerateUUID(string appName)
         {
             //Combine the IDs and get bytes
-            string _id = string.Concat(GetProcessorId(), GetMotherboardID(), GetDiskVolumeSerialNumber());
-            byte[] _byteIds= Encoding.UTF8.GetBytes(_id);
+            string _id = string.Concat(appName, GetProcessorId(), GetMotherboardID(), GetDiskVolumeSerialNumber());
+            byte[] _byteIds = Encoding.UTF8.GetBytes(_id);
 
             //Use MD5 to get the fixed length checksum of the ID string
             MD5CryptoServiceProvider _md5 = new MD5CryptoServiceProvider();
@@ -117,12 +117,12 @@ namespace QLicense
             return string.Format("{0}-{1}-{2}-{3}", _part1Id, _part2Id, _part3Id, _part4Id);
         }
 
-        public static byte[] GetDeviceIDInBytes(string deviceId)
+        public static byte[] GetUUIDInBytes(string UUID)
         {
             //Split 4 part Id into 4 ulong
-            string[] _ids = deviceId.Split('-');
+            string[] _ids = UUID.Split('-');
 
-            if (_ids.Length != 4) throw new ArgumentException("Wrong device ID");
+            if (_ids.Length != 4) throw new ArgumentException("Wrong UUID");
 
             //Combine 4 part Id into one byte array
             byte[] _value = new byte[16];
@@ -134,11 +134,19 @@ namespace QLicense
             return _value;            
         }
 
-        public static bool ValidateDeviceIDFormat(string deviceId)
-        {            
-            string[] _ids = deviceId.Split('-');
+        public static bool ValidateUUIDFormat(string UUID)
+        {
+            if (!string.IsNullOrWhiteSpace(UUID))
+            {
+                string[] _ids = UUID.Split('-');
 
-            return (_ids.Length == 4);
+                return (_ids.Length == 4);
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }

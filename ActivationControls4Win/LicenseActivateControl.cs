@@ -14,9 +14,21 @@ namespace ActivationControls4Win
     public delegate void LicenseValidatedHandler(object sender, LicenseValidatedEventArgs e);
     public partial class LicenseActivateControl : UserControl
     {
+        public string AppName { get; set; }
+
         public string CertificatePublicKeyFilePath { private get; set; }
 
         public bool ShowMessageAfterValidation { get; set; }
+
+        public Type LicenseObjectType { get; set; }
+
+        public string LicenseBASE64String
+        {
+            get
+            {
+                return txtLicense.Text.Trim();
+            }
+        }
 
         public event LicenseValidatedHandler OnLicenseValidatedOK;
 
@@ -31,21 +43,20 @@ namespace ActivationControls4Win
 
         private void LicenseActivateControl_Load(object sender, EventArgs e)
         {
-            txtUID.Text = LicenseHandler.GetHardwareID();
-
+            txtUUID.Text = LicenseHandler.GenerateUUID(AppName);
         }
 
         public void ValidateLicense()
         {
             if (string.IsNullOrWhiteSpace(txtLicense.Text))
             {
-                MessageBox.Show("请输入激活码", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请输入许可证", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             //Check the activation string
             LicenseStatus _licStatus= LicenseStatus.UNDEFINED;
-            LicenseEntity _lic = LicenseHandler.ParseLicenseFromBASE64String<LicenseEntity>(txtLicense.Text.Trim(), CertificatePublicKeyFilePath, out _licStatus);
+            LicenseEntity _lic = LicenseHandler.ParseLicenseFromBASE64String(LicenseObjectType, txtLicense.Text.Trim(), CertificatePublicKeyFilePath, out _licStatus);
             switch (_licStatus)
             {
                 case LicenseStatus.VALID:
@@ -80,10 +91,20 @@ namespace ActivationControls4Win
 
                     if (ShowMessageAfterValidation)
                     {
-                        MessageBox.Show("激活码不正确, 请获取新的激活码", "激活失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("许可证不正确, 请获取新的激活码", "激活失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     break;
             }
+        }
+
+        private void lnkMailSN_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
+
+        private void lnkCopy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Clipboard.SetText(txtUUID.Text);
         }
     }
 }
