@@ -10,18 +10,17 @@ namespace QLicense
 {
     public abstract class LicenseEntity
     {
-        [BrowsableAttribute(false)]
-        [XmlElementAttribute("HardwareID")]
-        public string HardwareID { get; set; }
+        [Browsable(false)]
+        [XmlElement("UUID")]
+        public string UUID { get; set; }
 
-        [BrowsableAttribute(true)]
-        [XmlElementAttribute("ExpiryDate")]
-        public DateTime ExpiryDate { get; set; }
+        [Browsable(false)]
+        [XmlElement("Type")]
+        public LicenseTypes Type { get; set; }
 
-        [BrowsableAttribute(false)]
-        [XmlElementAttribute("CreateDateTime")]
-        public DateTime CreateDateTime { get; protected set; }
-
+        [Browsable(false)]
+        [XmlElement("CreateDateTime")]
+        public DateTime CreateDateTime { get; set; }
 
     }
 }

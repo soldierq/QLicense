@@ -21,28 +21,20 @@ namespace QLicense
     /// Also export another cert with only public key
     /// </summary>
     public class LicenseHandler
-    {
-        public enum LicenseStatus
-        {
-            UNDEFINED,
-            VALID,
-            INVALID,
-            EXPIRED,            
-            CRACKED
-        }
+    {    
 
         public static string GetHardwareID()
         {
             return HardwareInfo.GenerateDeviceId();
         }
 
-        public static string GenerateLicenseBASE64String(LicenseEntity lic, string certPrivateKeyFilePath, string certFilePwd)
+        public static string GenerateLicenseBASE64String<T>(T lic, string certPrivateKeyFilePath, string certFilePwd)
         {
             //Serialize license object into XML                    
             XmlDocument _licenseObject = new XmlDocument();
             using (StringWriter _writer = new StringWriter())
             {
-                XmlSerializer _serializer = new XmlSerializer(typeof(LicenseEntity));
+                XmlSerializer _serializer = new XmlSerializer(typeof(LicenseEntity), new Type[]{typeof(T)});
 
                 _serializer.Serialize(_writer, lic);
 
@@ -62,18 +54,18 @@ namespace QLicense
         }
 
 
-        public static LicenseEntity ParseLicenseFromBASE64String(string licenseString, string certPubKeyFilePath, out LicenseStatus licStatus)
+        public static T ParseLicenseFromBASE64String<T>(string licenseString, string certPubKeyFilePath, out LicenseStatus licStatus)
         {
             licStatus = LicenseStatus.UNDEFINED;
 
             if (string.IsNullOrWhiteSpace(licenseString))
             {
                 licStatus = LicenseStatus.CRACKED;
-                return null;
+                return default(T);
             }
 
             string _licXML = string.Empty;
-            LicenseEntity _lic = null;
+            T _lic = default(T);
 
             try
             {
@@ -96,20 +88,13 @@ namespace QLicense
                     _licXML = xmlDoc.OuterXml;
 
                     //Deserialize license
-                    XmlSerializer _serializer = new XmlSerializer(typeof(LicenseEntity));
+                    XmlSerializer _serializer = new XmlSerializer(typeof(LicenseEntity),new Type[]{typeof(T)});
                     using (StringReader _reader = new StringReader(_licXML))
                     {
-                        _lic = (LicenseEntity)_serializer.Deserialize(_reader);
+                        _lic = (T)_serializer.Deserialize(_reader);
                     }
 
-                    if (_lic.ExpiryDate >= DateTime.Now.Date)
-                    {
-                        licStatus = LicenseStatus.VALID;
-                    }
-                    else
-                    {
-                        licStatus = LicenseStatus.EXPIRED;
-                    }
+                    licStatus = LicenseStatus.VALID;
                 }
                 else
                 {
@@ -203,6 +188,10 @@ namespace QLicense
             return signedXml.CheckSignature(Key);
         }
 
+        public static bool ValidateDeviceIDFormat(string deviceId)
+        {
+            return HardwareInfo.ValidateDeviceIDFormat(deviceId);
+        }
     }
 
 }

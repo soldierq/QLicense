@@ -52,6 +52,8 @@
     <Compile Include="HardwareInfo.cs" />
     <Compile Include="LicenseEntity.cs" />
     <Compile Include="LicenseHandler.cs" />
+    <Compile Include="LicenseStatus.cs" />
+    <Compile Include="LicenseTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
