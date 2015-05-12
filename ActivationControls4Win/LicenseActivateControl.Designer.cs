@@ -33,7 +33,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lnkCopy = new System.Windows.Forms.LinkLabel();
-            this.lnkMailSN = new System.Windows.Forms.LinkLabel();
             this.txtUUID = new System.Windows.Forms.TextBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -70,7 +69,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.lnkCopy);
-            this.groupBox1.Controls.Add(this.lnkMailSN);
             this.groupBox1.Controls.Add(this.txtUUID);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
@@ -93,7 +91,7 @@
             this.lnkCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkCopy.AutoSize = true;
             this.lnkCopy.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkCopy.Location = new System.Drawing.Point(212, 64);
+            this.lnkCopy.Location = new System.Drawing.Point(309, 64);
             this.lnkCopy.Name = "lnkCopy";
             this.lnkCopy.Size = new System.Drawing.Size(79, 13);
             this.lnkCopy.TabIndex = 2;
@@ -101,20 +99,6 @@
             this.lnkCopy.Text = "复制到剪贴板";
             this.lnkCopy.VisitedLinkColor = System.Drawing.Color.Blue;
             this.lnkCopy.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCopy_LinkClicked);
-            // 
-            // lnkMailSN
-            // 
-            this.lnkMailSN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkMailSN.AutoSize = true;
-            this.lnkMailSN.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkMailSN.Location = new System.Drawing.Point(297, 64);
-            this.lnkMailSN.Name = "lnkMailSN";
-            this.lnkMailSN.Size = new System.Drawing.Size(91, 13);
-            this.lnkMailSN.TabIndex = 3;
-            this.lnkMailSN.TabStop = true;
-            this.lnkMailSN.Text = "邮件发送序列号";
-            this.lnkMailSN.VisitedLinkColor = System.Drawing.Color.Blue;
-            this.lnkMailSN.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkMailSN_LinkClicked);
             // 
             // txtUUID
             // 
@@ -152,7 +136,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel lnkCopy;
-        private System.Windows.Forms.LinkLabel lnkMailSN;
         private System.Windows.Forms.TextBox txtUUID;
     }
 }

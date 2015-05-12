@@ -46,12 +46,12 @@ namespace ActivationControls4Win
             txtUUID.Text = LicenseHandler.GenerateUUID(AppName);
         }
 
-        public void ValidateLicense()
+        public bool ValidateLicense()
         {
             if (string.IsNullOrWhiteSpace(txtLicense.Text))
             {
                 MessageBox.Show("请输入许可证", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return false;
             }
 
             //Check the activation string
@@ -67,7 +67,7 @@ namespace ActivationControls4Win
 
                         if (_args.CustomizedValidationFailed)
                         {
-                            return;
+                            return false;
                         }
                     }
                    
@@ -76,11 +76,8 @@ namespace ActivationControls4Win
                         MessageBox.Show("本地许可证激活成功", "激活成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
-                    break;             
-                //case LicenseStatusCode.LOCAL_LICENSE_HARDWAREID_MISMATCH:
-                //    MessageBox.Show("本机的客户机序列号和证书中的不匹配, 请获取新的激活码", "激活失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //    break;
-
+                    return true;
+                    
                 case LicenseStatus.CRACKED:
                 case LicenseStatus.INVALID:
                 case LicenseStatus.UNDEFINED:
@@ -93,14 +90,14 @@ namespace ActivationControls4Win
                     {
                         MessageBox.Show("许可证不正确, 请获取新的激活码", "激活失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    break;
+
+                    return false;
+
+                default:
+                    return false;
             }
         }
 
-        private void lnkMailSN_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-
-        }
 
         private void lnkCopy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

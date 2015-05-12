@@ -55,6 +55,12 @@
       <DependentUpon>LicenseActivateControl.cs</DependentUpon>
     </Compile>
     <Compile Include="LicenseGeneratedEventArgs.cs" />
+    <Compile Include="LicenseInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LicenseInfoControl.Designer.cs">
+      <DependentUpon>LicenseInfoControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="LicenseSettingsValidatingEventArgs.cs" />
     <Compile Include="LicenseSettingsControl.cs">
       <SubType>UserControl</SubType>
@@ -75,6 +81,9 @@
   <ItemGroup>
     <EmbeddedResource Include="LicenseActivateControl.resx">
       <DependentUpon>LicenseActivateControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LicenseInfoControl.resx">
+      <DependentUpon>LicenseInfoControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LicenseSettingsControl.resx">
       <DependentUpon>LicenseSettingsControl.cs</DependentUpon>
