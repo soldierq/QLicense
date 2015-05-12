@@ -1,4 +1,4 @@
-﻿namespace ActivationControls4Win
+﻿namespace QLicense.Windows.Controls
 {
     partial class LicenseSettingsControl
     {

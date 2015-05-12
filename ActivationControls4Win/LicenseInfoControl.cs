@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using QLicense;
 using System.Reflection;
 
-namespace ActivationControls4Win
+namespace QLicense.Windows.Controls
 {
     public partial class LicenseInfoControl : UserControl
     {
@@ -25,36 +25,44 @@ namespace ActivationControls4Win
 
         public void ShowLicenseInfo(LicenseEntity license, string additionalInfo)
         {
-            StringBuilder _sb = new StringBuilder(512);
-
-            Type _typeLic = license.GetType();
-            FieldInfo[] _fields = _typeLic.GetFields();
-            //TODO: debug why fields is empty
-
-            foreach (FieldInfo _fi in _fields)
+            try
             {
-                ShowInLicenseInfoAttribute _showAttr = (ShowInLicenseInfoAttribute)Attribute.GetCustomAttribute(_fi, typeof(ShowInLicenseInfoAttribute));
-                if (_showAttr != null && _showAttr.ShowInLicenseInfo)
+                StringBuilder _sb = new StringBuilder(512);
+
+                Type _typeLic = license.GetType();
+                PropertyInfo[] _props = _typeLic.GetProperties();
+
+                object _value=null;
+                foreach (PropertyInfo _p in _props)
                 {
-                    DisplayNameAttribute _nameAttr = (DisplayNameAttribute)Attribute.GetCustomAttribute(_fi, typeof(DisplayNameAttribute));
-                    string _value = _fi.GetValue(license).ToString();
-                    if (_nameAttr != null)
+                    ShowInLicenseInfoAttribute _showAttr = (ShowInLicenseInfoAttribute)Attribute.GetCustomAttribute(_p, typeof(ShowInLicenseInfoAttribute));
+                    if (_showAttr != null && _showAttr.ShowInLicenseInfo)
                     {
-                        _sb.Append(_nameAttr.DisplayName);
+                        //TODO: change for datetime & enum type
+                        _value = _p.GetValue(license, null);
+                        _sb.Append(_showAttr.DisplayAs);
                         _sb.Append(": ");
-                        _sb.Append(_value);
+                        if (_value != null)
+                        {
+                            _sb.Append(_value.ToString());
+                        }
                         _sb.Append("\r\n");
+
                     }
-
                 }
-            }
+                
 
-            if (string.IsNullOrWhiteSpace(additionalInfo))
+                if (string.IsNullOrWhiteSpace(additionalInfo))
+                {
+                    _sb.Append(additionalInfo.Trim());
+                }
+
+                txtLicInfo.Text = _sb.ToString();
+            }
+            catch (Exception ex)
             {
-                _sb.Append(additionalInfo.Trim());
+                txtLicInfo.Text = ex.Message;
             }
-
-            txtLicInfo.Text = _sb.ToString();
         }
     }
 }

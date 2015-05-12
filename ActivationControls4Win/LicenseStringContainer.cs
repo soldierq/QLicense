@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-namespace ActivationControls4Win
+namespace QLicense.Windows.Controls
 {
     public partial class LicenseStringContainer : UserControl
     {

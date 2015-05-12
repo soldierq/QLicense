@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("QLicense")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Eli Lilly and Company")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("QLicense")]
-[assembly: AssemblyCopyright("Copyright © Eli Lilly and Company 2015")]
+[assembly: AssemblyCopyright("Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

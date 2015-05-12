@@ -1,4 +1,4 @@
-﻿namespace ActivationControls4Win
+﻿namespace QLicense.Windows.Controls
 {
     partial class LicenseActivateControl
     {
@@ -120,7 +120,6 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "LicenseActivateControl";
             this.Size = new System.Drawing.Size(408, 371);
-            this.Load += new System.EventHandler(this.LicenseActivateControl_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);

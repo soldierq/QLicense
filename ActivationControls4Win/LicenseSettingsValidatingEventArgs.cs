@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ActivationControls4Win
+namespace QLicense.Windows.Controls
 {
     public class LicenseSettingsValidatingEventArgs:EventArgs
     {

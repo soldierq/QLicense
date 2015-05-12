@@ -54,8 +54,9 @@ namespace QLicense
         }
 
 
-        public static LicenseEntity ParseLicenseFromBASE64String(Type licenseObjType, string licenseString, string certPubKeyFilePath, out LicenseStatus licStatus)
+        public static LicenseEntity ParseLicenseFromBASE64String(Type licenseObjType, string licenseString, string certPubKeyFilePath, out LicenseStatus licStatus, out string validationMsg)
         {
+            validationMsg = string.Empty;
             licStatus = LicenseStatus.UNDEFINED;
 
             if (string.IsNullOrWhiteSpace(licenseString))
@@ -94,7 +95,7 @@ namespace QLicense
                         _lic = (LicenseEntity)_serializer.Deserialize(_reader);
                     }
 
-                    licStatus = LicenseStatus.VALID;
+                    licStatus = _lic.DoExtraValidation(out validationMsg);
                 }
                 else
                 {
@@ -188,9 +189,9 @@ namespace QLicense
             return signedXml.CheckSignature(Key);
         }
 
-        public static bool ValidateUUIDFormat(string deviceId)
+        public static bool ValidateUUIDFormat(string UUID)
         {
-            return HardwareInfo.ValidateUUIDFormat(deviceId);
+            return HardwareInfo.ValidateUUIDFormat(UUID);
         }
     }
 

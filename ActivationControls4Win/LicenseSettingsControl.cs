@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using QLicense;
 using System.Security;
 
-namespace ActivationControls4Win
+namespace QLicense.Windows.Controls
 {
     public delegate void LicenseSettingsValidatingHandler(object sender, LicenseSettingsValidatingEventArgs e);
     public delegate void LicenseGeneratedHandler(object sender, LicenseGeneratedEventArgs e);

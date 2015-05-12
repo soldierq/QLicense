@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ActivationControls4Win
+namespace QLicense.Windows.Controls
 {
     public class LicenseGeneratedEventArgs
     {

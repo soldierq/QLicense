@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using QLicense;
 
-namespace ActivationControls4Win
+namespace QLicense.Windows.Controls
 {
-    public delegate void LicenseValidatedHandler(object sender, LicenseValidatedEventArgs e);
     public partial class LicenseActivateControl : UserControl
     {
         public string AppName { get; set; }
@@ -30,10 +29,6 @@ namespace ActivationControls4Win
             }
         }
 
-        public event LicenseValidatedHandler OnLicenseValidatedOK;
-
-        public event LicenseValidatedHandler OnLicenseValidatedFailed;
-
         public LicenseActivateControl()
         {
             InitializeComponent();
@@ -41,7 +36,7 @@ namespace ActivationControls4Win
             ShowMessageAfterValidation = true;
         }
 
-        private void LicenseActivateControl_Load(object sender, EventArgs e)
+        public void ShowUUID()
         {
             txtUUID.Text = LicenseHandler.GenerateUUID(AppName);
         }
@@ -56,24 +51,14 @@ namespace ActivationControls4Win
 
             //Check the activation string
             LicenseStatus _licStatus= LicenseStatus.UNDEFINED;
-            LicenseEntity _lic = LicenseHandler.ParseLicenseFromBASE64String(LicenseObjectType, txtLicense.Text.Trim(), CertificatePublicKeyFilePath, out _licStatus);
+            string _msg = string.Empty;
+            LicenseEntity _lic = LicenseHandler.ParseLicenseFromBASE64String(LicenseObjectType, txtLicense.Text.Trim(), CertificatePublicKeyFilePath, out _licStatus, out _msg);
             switch (_licStatus)
             {
-                case LicenseStatus.VALID:
-                    if (OnLicenseValidatedOK != null)
-                    {
-                        LicenseValidatedEventArgs _args = new LicenseValidatedEventArgs() { License = _lic, ValidationStatus = _licStatus };
-                        OnLicenseValidatedOK(this, _args);
-
-                        if (_args.CustomizedValidationFailed)
-                        {
-                            return false;
-                        }
-                    }
-                   
+                case LicenseStatus.VALID:                   
                     if (ShowMessageAfterValidation)
                     {
-                        MessageBox.Show("本地许可证激活成功", "激活成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(_msg, "激活成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                     return true;
@@ -81,14 +66,9 @@ namespace ActivationControls4Win
                 case LicenseStatus.CRACKED:
                 case LicenseStatus.INVALID:
                 case LicenseStatus.UNDEFINED:
-                    if (OnLicenseValidatedFailed != null)
-                    {
-                        OnLicenseValidatedFailed(this, new LicenseValidatedEventArgs { License = _lic, ValidationStatus = _licStatus });
-                    }
-
                     if (ShowMessageAfterValidation)
                     {
-                        MessageBox.Show("许可证不正确, 请获取新的激活码", "激活失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(_msg, "激活失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                     return false;
