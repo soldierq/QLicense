@@ -10,8 +10,17 @@ namespace QLicense
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
     public class ShowInLicenseInfoAttribute : Attribute
     {
+        public enum FormatType
+        {
+            String,
+            Date,
+            DateTime,
+            EnumDescription,
+        }
+
         protected bool _showInLicenseInfo = true;
         protected string _displayAs = string.Empty;
+        protected FormatType _formatType = FormatType.String;
 
         public ShowInLicenseInfoAttribute()
         {
@@ -31,6 +40,12 @@ namespace QLicense
             _showInLicenseInfo = showInLicenseInfo;
             _displayAs = displayAs;
         }
+        public ShowInLicenseInfoAttribute(bool showInLicenseInfo, string displayAs, FormatType dataFormatType)
+        {
+            _showInLicenseInfo = showInLicenseInfo;
+            _displayAs = displayAs;
+            _formatType = dataFormatType;
+        }
 
         public bool ShowInLicenseInfo
         {
@@ -45,6 +60,14 @@ namespace QLicense
             get
             {
                 return _displayAs;
+            }
+        }
+
+        public FormatType DataFormatType
+        {
+            get
+            {
+                return _formatType;
             }
         }
     }
@@ -64,12 +87,12 @@ namespace QLicense
 
         [Browsable(false)]
         [XmlElement("Type")]
-        [ShowInLicenseInfo(true, "类型")]
+        [ShowInLicenseInfo(true, "类型", ShowInLicenseInfoAttribute.FormatType.EnumDescription)]
         public LicenseTypes Type { get; set; }
 
         [Browsable(false)]
         [XmlElement("CreateDateTime")]
-        [ShowInLicenseInfo(true, "创建时间")]
+        [ShowInLicenseInfo(true, "创建时间", ShowInLicenseInfoAttribute.FormatType.DateTime)]
         public DateTime CreateDateTime { get; set; }
 
         public abstract LicenseStatus DoExtraValidation(out string validationMsg);

@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using QLicense;
-using System.Security;
 
 namespace QLicense.Windows.Controls
 {
@@ -23,15 +14,24 @@ namespace QLicense.Windows.Controls
 
         protected LicenseEntity _lic;
 
+        public LicenseEntity License
+        {
+            set
+            {
+                _lic = value;
+                pgLicenseSettings.SelectedObject = _lic;
+            }
+        }
+
         public string CertificatePrivateKeyFilePath { set; private get; }
 
         public string CertificatePassword { set; private get; }
 
-        public bool ShowVolumeLicenseType
+        public bool AllowVolumeLicense
         {
             get
             {
-                return grpbxLicenseType.Visible;
+                return grpbxLicenseType.Enabled;
             }
             set
             {
@@ -40,7 +40,7 @@ namespace QLicense.Windows.Controls
                     rdoSingleLicense.Checked = true;
                 }
 
-                grpbxLicenseType.Visible = value;
+                grpbxLicenseType.Enabled = value;
             }
         }
 
@@ -49,12 +49,6 @@ namespace QLicense.Windows.Controls
             InitializeComponent();
         }
 
-        public void ShowLicense(LicenseEntity license)
-        {
-            _lic = license;
-
-            pgLicenseSettings.SelectedObject = _lic;
-        }
 
         private void LicenseTypeRadioButtons_CheckedChanged(object sender, EventArgs e)
         {
@@ -90,7 +84,7 @@ namespace QLicense.Windows.Controls
 
             if (OnLicenseSettingsValidating != null)
             {
-                LicenseSettingsValidatingEventArgs _args=new LicenseSettingsValidatingEventArgs() { License=_lic, CancelGenerating = false };
+                LicenseSettingsValidatingEventArgs _args = new LicenseSettingsValidatingEventArgs() { License = _lic, CancelGenerating = false };
 
                 OnLicenseSettingsValidating(this, _args);
 
