@@ -24,7 +24,7 @@ namespace QLicense.Windows.Controls
 
         public void ShowLicenseInfo(LicenseEntity license)
         {
-            this.ShowLicenseInfo(license, string.Empty);
+            ShowLicenseInfo(license, string.Empty);
         }
 
 
