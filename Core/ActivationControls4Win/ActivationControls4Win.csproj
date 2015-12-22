@@ -81,13 +81,25 @@
     <EmbeddedResource Include="LicenseActivateControl.resx">
       <DependentUpon>LicenseActivateControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LicenseActivateControl.zh-Hans.resx">
+      <DependentUpon>LicenseActivateControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LicenseInfoControl.resx">
+      <DependentUpon>LicenseInfoControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LicenseInfoControl.zh-Hans.resx">
       <DependentUpon>LicenseInfoControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LicenseSettingsControl.resx">
       <DependentUpon>LicenseSettingsControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LicenseSettingsControl.zh-Hans.resx">
+      <DependentUpon>LicenseSettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LicenseStringContainer.resx">
+      <DependentUpon>LicenseStringContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LicenseStringContainer.zh-Hans.resx">
       <DependentUpon>LicenseStringContainer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

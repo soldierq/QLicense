@@ -117,4 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>许可证</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>许可证标识号</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>235, 13</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>在购买许可证时，请提供如下许可证标识号</value>
+  </data>
+  <data name="lnkCopy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 13</value>
+  </data>
+  <data name="lnkCopy.Text" xml:space="preserve">
+    <value>复制到剪贴板</value>
+  </data>
 </root>

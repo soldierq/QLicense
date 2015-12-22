@@ -13,16 +13,16 @@ namespace QLicense
     /// <summary>
     /// Usage Guide:
     /// Command for creating the certificate
-    /// >> makecert -r -pe -sk "LIC_XML_SIGN_KEY" -n "CN=<YourAppName>" -$ commercial -cy authority -sky signature -ss my -sr currentuser
+    /// >> makecert -r -pe -sv "LicenseSign.pfx" -n "CN=<YourAppName>" -$ commercial -cy authority -sky Signature "LicenseVerify.cer"
     /// Then export the cert with private key from key store with password above
     /// Also export another cert with only public key
     /// </summary>
     public class LicenseHandler
     {
 
-        public static string GenerateUUID(string appName)
+        public static string GenerateUID(string appName)
         {
-            return HardwareInfo.GenerateUUID(appName);
+            return HardwareInfo.GenerateUID(appName);
         }
 
         public static string GenerateLicenseBASE64String(LicenseEntity lic, string certPrivateKeyFilePath, string certFilePwd)
@@ -186,9 +186,9 @@ namespace QLicense
             return signedXml.CheckSignature(Key);
         }
 
-        public static bool ValidateUUIDFormat(string UUID)
+        public static bool ValidateUIDFormat(string UID)
         {
-            return HardwareInfo.ValidateUUIDFormat(UUID);
+            return HardwareInfo.ValidateUIDFormat(UID);
         }
     }
 

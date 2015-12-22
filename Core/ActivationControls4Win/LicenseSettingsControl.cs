@@ -52,9 +52,9 @@ namespace QLicense.Windows.Controls
 
         private void LicenseTypeRadioButtons_CheckedChanged(object sender, EventArgs e)
         {
-            txtUUID.Text = string.Empty;
+            txtUID.Text = string.Empty;
 
-            txtUUID.Enabled = rdoSingleLicense.Checked;
+            txtUID.Enabled = rdoSingleLicense.Checked;
         }
 
         private void btnGenLicense_Click(object sender, EventArgs e)
@@ -63,21 +63,21 @@ namespace QLicense.Windows.Controls
 
             if (rdoSingleLicense.Checked)
             {
-                if (LicenseHandler.ValidateUUIDFormat(txtUUID.Text.Trim()))
+                if (LicenseHandler.ValidateUIDFormat(txtUID.Text.Trim()))
                 {
                     _lic.Type = LicenseTypes.Single;
-                    _lic.UUID = txtUUID.Text.Trim();
+                    _lic.UID = txtUID.Text.Trim();
                 }
                 else
                 {
-                    MessageBox.Show("许可证标识号为空或者格式不正确", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("License UID is blank or invalid", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
             else if (rdoVolumeLicense.Checked)
             {
                 _lic.Type = LicenseTypes.Volume;
-                _lic.UUID = string.Empty;
+                _lic.UID = string.Empty;
             }
 
             _lic.CreateDateTime = DateTime.Now;

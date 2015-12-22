@@ -96,7 +96,7 @@ namespace QLicense
         /// Combine CPU ID, Disk C Volume Serial Number and Motherboard Serial Number as device Id
         /// </summary>
         /// <returns></returns>
-        public static string GenerateUUID(string appName)
+        public static string GenerateUID(string appName)
         {
             //Combine the IDs and get bytes
             string _id = string.Concat(appName, GetProcessorId(), GetMotherboardID(), GetDiskVolumeSerialNumber());
@@ -116,12 +116,12 @@ namespace QLicense
             return string.Format("{0}-{1}-{2}-{3}", _part1Id, _part2Id, _part3Id, _part4Id);
         }
 
-        public static byte[] GetUUIDInBytes(string UUID)
+        public static byte[] GetUIDInBytes(string UID)
         {
             //Split 4 part Id into 4 ulong
-            string[] _ids = UUID.Split('-');
+            string[] _ids = UID.Split('-');
 
-            if (_ids.Length != 4) throw new ArgumentException("Wrong UUID");
+            if (_ids.Length != 4) throw new ArgumentException("Wrong UID");
 
             //Combine 4 part Id into one byte array
             byte[] _value = new byte[16];
@@ -133,11 +133,11 @@ namespace QLicense
             return _value;            
         }
 
-        public static bool ValidateUUIDFormat(string UUID)
+        public static bool ValidateUIDFormat(string UID)
         {
-            if (!string.IsNullOrWhiteSpace(UUID))
+            if (!string.IsNullOrWhiteSpace(UID))
             {
-                string[] _ids = UUID.Split('-');
+                string[] _ids = UID.Split('-');
 
                 return (_ids.Length == 4);
             }

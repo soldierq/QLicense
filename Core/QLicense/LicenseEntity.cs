@@ -81,20 +81,25 @@ namespace QLicense
         public string AppName { get; protected set; }
 
         [Browsable(false)]
-        [XmlElement("UUID")]
+        [XmlElement("UID")]
         [ShowInLicenseInfo(false)]
-        public string UUID { get; set; }
+        public string UID { get; set; }
 
         [Browsable(false)]
         [XmlElement("Type")]
-        [ShowInLicenseInfo(true, "类型", ShowInLicenseInfoAttribute.FormatType.EnumDescription)]
+        [ShowInLicenseInfo(true, "Type", ShowInLicenseInfoAttribute.FormatType.EnumDescription)]
         public LicenseTypes Type { get; set; }
 
         [Browsable(false)]
         [XmlElement("CreateDateTime")]
-        [ShowInLicenseInfo(true, "创建时间", ShowInLicenseInfoAttribute.FormatType.DateTime)]
+        [ShowInLicenseInfo(true, "Creation Time", ShowInLicenseInfoAttribute.FormatType.DateTime)]
         public DateTime CreateDateTime { get; set; }
 
+        /// <summary>
+        /// For child class to do extra validation for those extended properties
+        /// </summary>
+        /// <param name="validationMsg"></param>
+        /// <returns></returns>
         public abstract LicenseStatus DoExtraValidation(out string validationMsg);
 
     }

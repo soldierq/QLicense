@@ -28,16 +28,16 @@ namespace QLicense.Windows.Controls
             ShowMessageAfterValidation = true;
         }
 
-        public void ShowUUID()
+        public void ShowUID()
         {
-            txtUUID.Text = LicenseHandler.GenerateUUID(AppName);
+            txtUID.Text = LicenseHandler.GenerateUID(AppName);
         }
 
         public bool ValidateLicense()
         {
             if (string.IsNullOrWhiteSpace(txtLicense.Text))
             {
-                MessageBox.Show("请输入许可证", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please input license", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
@@ -50,7 +50,7 @@ namespace QLicense.Windows.Controls
                 case LicenseStatus.VALID:                   
                     if (ShowMessageAfterValidation)
                     {
-                        MessageBox.Show(_msg, "激活成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(_msg, "License is valid", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                     return true;
@@ -60,7 +60,7 @@ namespace QLicense.Windows.Controls
                 case LicenseStatus.UNDEFINED:
                     if (ShowMessageAfterValidation)
                     {
-                        MessageBox.Show(_msg, "激活失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(_msg, "License is INVALID", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                     return false;
@@ -73,7 +73,7 @@ namespace QLicense.Windows.Controls
 
         private void lnkCopy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Clipboard.SetText(txtUUID.Text);
+            Clipboard.SetText(txtUID.Text);
         }
     }
 }
