@@ -42,17 +42,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\ActivationControls4Win\ActivationControls4Win.csproj">
-      <Project>{ddf06eac-02df-4bda-a883-98b856bc1765}</Project>
-      <Name>ActivationControls4Win</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Core\QLicense\QLicense.csproj">
       <Project>{1980e43f-c5e4-4a2b-95a6-1aebdc7ee2b7}</Project>
       <Name>QLicense</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DemoWinFormApp\DemoWinFormApp.csproj">
-      <Project>{01f6d760-d0d5-45cb-b730-afbaf298c7d1}</Project>
-      <Name>DemoWinFormApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

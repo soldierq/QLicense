@@ -77,6 +77,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Content Include="LicenseVerify.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -89,6 +92,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\QLicense\QLicense.csproj">
+      <Project>{1980e43f-c5e4-4a2b-95a6-1aebdc7ee2b7}</Project>
+      <Name>QLicense</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DemoLicense\DemoLicense.csproj">
+      <Project>{9f0bd6df-f288-451b-828e-6431e5441db8}</Project>
+      <Name>DemoLicense</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

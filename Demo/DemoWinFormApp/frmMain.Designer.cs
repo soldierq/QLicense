@@ -28,33 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.licenseInfoControl1 = new QLicense.Windows.Controls.LicenseInfoControl();
+            this.licInfo = new QLicense.Windows.Controls.LicenseInfoControl();
             this.SuspendLayout();
             // 
-            // licenseInfoControl1
+            // licInfo
             // 
-            this.licenseInfoControl1.DateFormat = null;
-            this.licenseInfoControl1.DateTimeFormat = null;
-            this.licenseInfoControl1.Location = new System.Drawing.Point(12, 12);
-            this.licenseInfoControl1.Name = "licenseInfoControl1";
-            this.licenseInfoControl1.Size = new System.Drawing.Size(300, 300);
-            this.licenseInfoControl1.TabIndex = 0;
+            this.licInfo.DateFormat = null;
+            this.licInfo.DateTimeFormat = null;
+            this.licInfo.Location = new System.Drawing.Point(12, 12);
+            this.licInfo.Name = "licInfo";
+            this.licInfo.Size = new System.Drawing.Size(300, 300);
+            this.licInfo.TabIndex = 0;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(324, 330);
-            this.Controls.Add(this.licenseInfoControl1);
+            this.Controls.Add(this.licInfo);
             this.Name = "frmMain";
             this.Text = "DemoWinFormApp";
+            this.Shown += new System.EventHandler(this.frmMain_Shown);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private QLicense.Windows.Controls.LicenseInfoControl licenseInfoControl1;
+        private QLicense.Windows.Controls.LicenseInfoControl licInfo;
     }
 }
 

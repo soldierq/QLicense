@@ -57,6 +57,7 @@
             this.licSettings.Name = "licSettings";
             this.licSettings.Size = new System.Drawing.Size(328, 427);
             this.licSettings.TabIndex = 7;
+            this.licSettings.OnLicenseGenerated += new QLicense.Windows.Controls.LicenseGeneratedHandler(this.licSettings_OnLicenseGenerated);
             // 
             // licString
             // 

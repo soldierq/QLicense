@@ -8,7 +8,7 @@ namespace ActivationTool
 {
     public partial class frmMain : Form
     {
-        private const string CERT_PWD = "";
+        private const string CERT_PWD = "demo";
         private const string CERT_NAME = "LicenseSign.pfx";
 
         public frmMain()
@@ -42,5 +42,6 @@ namespace ActivationTool
                 Path.Combine(Application.StartupPath, CERT_NAME),
                 CERT_PWD);
         }
+
     }
 }

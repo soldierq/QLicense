@@ -13,8 +13,8 @@ namespace QLicense
     /// <summary>
     /// Usage Guide:
     /// Command for creating the certificate
-    /// >> makecert -r -pe -sv "LicenseSign.pfx" -n "CN=<YourAppName>" -$ commercial -cy authority -sky Signature "LicenseVerify.cer"
-    /// Then export the cert with private key from key store with password above
+    /// >> makecert -pe -ss My -sr CurrentUser -$ commercial -n "CN=<YourCertName>" -sky Signature
+    /// Then export the cert with private key from key store with a password
     /// Also export another cert with only public key
     /// </summary>
     public class LicenseHandler

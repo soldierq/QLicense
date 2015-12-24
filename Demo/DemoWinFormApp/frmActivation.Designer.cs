@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.licenseActivateControl1 = new QLicense.Windows.Controls.LicenseActivateControl();
+            this.licActCtrl = new QLicense.Windows.Controls.LicenseActivateControl();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // licenseActivateControl1
+            // licActCtrl
             // 
-            this.licenseActivateControl1.AppName = null;
-            this.licenseActivateControl1.LicenseObjectType = null;
-            this.licenseActivateControl1.Location = new System.Drawing.Point(12, 12);
-            this.licenseActivateControl1.Name = "licenseActivateControl1";
-            this.licenseActivateControl1.ShowMessageAfterValidation = true;
-            this.licenseActivateControl1.Size = new System.Drawing.Size(408, 371);
-            this.licenseActivateControl1.TabIndex = 0;
+            this.licActCtrl.AppName = null;
+            this.licActCtrl.LicenseObjectType = null;
+            this.licActCtrl.Location = new System.Drawing.Point(12, 12);
+            this.licActCtrl.Name = "licActCtrl";
+            this.licActCtrl.ShowMessageAfterValidation = true;
+            this.licActCtrl.Size = new System.Drawing.Size(408, 371);
+            this.licActCtrl.TabIndex = 0;
             // 
             // btnCancel
             // 
@@ -49,8 +49,9 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "button1";
+            this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnOK
             // 
@@ -58,8 +59,9 @@
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 2;
-            this.btnOK.Text = "button2";
+            this.btnOK.Text = "&OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // frmActivation
             // 
@@ -68,16 +70,17 @@
             this.ClientSize = new System.Drawing.Size(425, 428);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.licenseActivateControl1);
+            this.Controls.Add(this.licActCtrl);
             this.Name = "frmActivation";
             this.Text = "frmActivation";
+            this.Load += new System.EventHandler(this.frmActivation_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private QLicense.Windows.Controls.LicenseActivateControl licenseActivateControl1;
+        private QLicense.Windows.Controls.LicenseActivateControl licActCtrl;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
     }
