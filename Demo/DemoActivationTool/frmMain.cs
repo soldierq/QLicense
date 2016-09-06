@@ -1,26 +1,42 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
+using System.Security;
+using System.Reflection;
 using QLicense;
 using DemoLicense;
 
-namespace ActivationTool
+namespace DemoActivationTool
 {
     public partial class frmMain : Form
     {
-        private const string CERT_PWD = "demo";
-        private const string CERT_NAME = "LicenseSign.pfx";
+        private byte[] _certPubicKeyData;
+        private SecureString _certPwd = new SecureString();
 
         public frmMain()
         {
             InitializeComponent();
+
+            _certPwd.AppendChar('d');
+            _certPwd.AppendChar('e');
+            _certPwd.AppendChar('m');
+            _certPwd.AppendChar('o');
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            //Read public key from assembly
+            Assembly _assembly = Assembly.GetExecutingAssembly();
+            using (MemoryStream _mem = new MemoryStream())
+            {
+                _assembly.GetManifestResourceStream("DemoActivationTool.LicenseSign.pfx").CopyTo(_mem);
+
+                _certPubicKeyData = _mem.ToArray();
+            }
+
             //Initialize the path for the certificate to sign the XML license file
-            licSettings.CertificatePrivateKeyFilePath = Path.Combine(Application.StartupPath, CERT_NAME);
-            licSettings.CertificatePassword = CERT_PWD;
+            licSettings.CertificatePrivateKeyData = _certPubicKeyData;
+            licSettings.CertificatePassword = _certPwd;
 
             //Initialize a new license object
             licSettings.License = new MyLicense(); 
@@ -39,8 +55,8 @@ namespace ActivationTool
             //Call the core library to generate the license
             licString.LicenseString = LicenseHandler.GenerateLicenseBASE64String(
                 new MyLicense(),
-                Path.Combine(Application.StartupPath, CERT_NAME),
-                CERT_PWD);
+                _certPubicKeyData,
+                _certPwd);
         }
 
     }

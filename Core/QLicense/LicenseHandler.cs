@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
@@ -25,7 +26,7 @@ namespace QLicense
             return HardwareInfo.GenerateUID(appName);
         }
 
-        public static string GenerateLicenseBASE64String(LicenseEntity lic, string certPrivateKeyFilePath, string certFilePwd)
+        public static string GenerateLicenseBASE64String(LicenseEntity lic, byte[] certPrivateKeyData, SecureString certFilePwd)
         {
             //Serialize license object into XML                    
             XmlDocument _licenseObject = new XmlDocument();
@@ -39,7 +40,7 @@ namespace QLicense
             }
 
             //Get RSA key from certificate
-            X509Certificate2 cert = new X509Certificate2(certPrivateKeyFilePath, certFilePwd);
+            X509Certificate2 cert = new X509Certificate2(certPrivateKeyData, certFilePwd);
 
             RSACryptoServiceProvider rsaKey = (RSACryptoServiceProvider)cert.PrivateKey;
 
@@ -51,7 +52,8 @@ namespace QLicense
         }
 
 
-        public static LicenseEntity ParseLicenseFromBASE64String(Type licenseObjType, string licenseString, string certPubKeyFilePath, out LicenseStatus licStatus, out string validationMsg)
+
+        public static LicenseEntity ParseLicenseFromBASE64String(Type licenseObjType, string licenseString, byte[] certPubKeyData, out LicenseStatus licStatus, out string validationMsg)
         {
             validationMsg = string.Empty;
             licStatus = LicenseStatus.UNDEFINED;
@@ -68,7 +70,7 @@ namespace QLicense
             try
             {
                 //Get RSA key from certificate
-                X509Certificate2 cert = new X509Certificate2(certPubKeyFilePath);
+                X509Certificate2 cert = new X509Certificate2(certPubKeyData);
                 RSACryptoServiceProvider rsaKey = (RSACryptoServiceProvider)cert.PublicKey.Key;
 
                 XmlDocument xmlDoc = new XmlDocument();

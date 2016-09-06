@@ -7,7 +7,7 @@ namespace QLicense.Windows.Controls
     {
         public string AppName { get; set; }
 
-        public string CertificatePublicKeyFilePath { private get; set; }
+        public byte[] CertificatePublicKeyData { private get; set; }
 
         public bool ShowMessageAfterValidation { get; set; }
 
@@ -44,7 +44,7 @@ namespace QLicense.Windows.Controls
             //Check the activation string
             LicenseStatus _licStatus= LicenseStatus.UNDEFINED;
             string _msg = string.Empty;
-            LicenseEntity _lic = LicenseHandler.ParseLicenseFromBASE64String(LicenseObjectType, txtLicense.Text.Trim(), CertificatePublicKeyFilePath, out _licStatus, out _msg);
+            LicenseEntity _lic = LicenseHandler.ParseLicenseFromBASE64String(LicenseObjectType, txtLicense.Text.Trim(), CertificatePublicKeyData, out _licStatus, out _msg);
             switch (_licStatus)
             {
                 case LicenseStatus.VALID:                   

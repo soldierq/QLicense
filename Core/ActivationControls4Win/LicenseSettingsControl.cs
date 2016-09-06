@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using System.Windows.Forms;
 
 namespace QLicense.Windows.Controls
@@ -23,9 +24,9 @@ namespace QLicense.Windows.Controls
             }
         }
 
-        public string CertificatePrivateKeyFilePath { set; private get; }
+        public byte[] CertificatePrivateKeyData { set; private get; }
 
-        public string CertificatePassword { set; private get; }
+        public SecureString CertificatePassword { set; private get; }
 
         public bool AllowVolumeLicense
         {
@@ -96,7 +97,7 @@ namespace QLicense.Windows.Controls
 
             if (OnLicenseGenerated != null)
             {
-                string _licStr = LicenseHandler.GenerateLicenseBASE64String(_lic, CertificatePrivateKeyFilePath, CertificatePassword);
+                string _licStr = LicenseHandler.GenerateLicenseBASE64String(_lic, CertificatePrivateKeyData, CertificatePassword);
 
                 OnLicenseGenerated(this, new LicenseGeneratedEventArgs() { LicenseBASE64String = _licStr });
             }

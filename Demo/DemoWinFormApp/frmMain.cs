@@ -1,13 +1,16 @@
 ﻿using System;
-using System.Windows.Forms;
-using QLicense;
 using System.IO;
+using System.Windows.Forms;
+using System.Reflection;
+using QLicense;
 using DemoLicense;
 
 namespace DemoWinFormApp
 {
     public partial class frmMain : Form
     {
+
+        byte[] _certPubicKeyData;
         public frmMain()
         {
             InitializeComponent();
@@ -21,13 +24,27 @@ namespace DemoWinFormApp
             string _msg = string.Empty;
             LicenseStatus _status = LicenseStatus.UNDEFINED;
 
+            //Read public key from assembly
+            Assembly _assembly = Assembly.GetExecutingAssembly();
+            using (MemoryStream _mem = new MemoryStream())
+            {
+                _assembly.GetManifestResourceStream("DemoWinFormApp.LicenseVerify.cer").CopyTo(_mem);
+
+                _certPubicKeyData = _mem.ToArray();
+            }
+
             //Check if the XML license file exists
             if (File.Exists("license.lic"))
             {
-                _lic = (MyLicense)LicenseHandler.ParseLicenseFromBASE64String(typeof(MyLicense), File.ReadAllText("license.lic"), "LicenseVerify.cer", out _status, out _msg);
+                _lic = (MyLicense)LicenseHandler.ParseLicenseFromBASE64String(
+                    typeof(MyLicense),
+                    File.ReadAllText("license.lic"),
+                    _certPubicKeyData,
+                    out _status,
+                    out _msg);
             }
             else
-            {                
+            {
                 _status = LicenseStatus.INVALID;
                 _msg = "Your copy of this application is not activated";
             }
@@ -42,7 +59,7 @@ namespace DemoWinFormApp
 
                     //Here for demo, just show the license information and RETURN without additional checking       
                     licInfo.ShowLicenseInfo(_lic);
-                            
+
                     return;
 
                 default:
@@ -52,12 +69,13 @@ namespace DemoWinFormApp
 
                     using (frmActivation frm = new frmActivation())
                     {
+                        frm.CertificatePublicKeyData = _certPubicKeyData;
                         frm.ShowDialog();
 
                         //Exit the application after activation to reload the license file 
                         //Actually it is not nessessary, you may just call the API to reload the license file
                         //Here just simplied the demo process
-                        
+
                         Application.Exit();
                     }
                     break;

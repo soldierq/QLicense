@@ -1,4 +1,4 @@
-﻿namespace ActivationTool
+﻿namespace DemoActivationTool
 {
     partial class frmMain
     {

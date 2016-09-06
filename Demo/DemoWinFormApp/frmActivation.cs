@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;    
+using System.IO;
 
 namespace DemoWinFormApp
 {
     public partial class frmActivation : Form
     {
+        public byte[] CertificatePublicKeyData { private get; set; }
+
         public frmActivation()
         {
             InitializeComponent();
@@ -30,7 +26,7 @@ namespace DemoWinFormApp
             //Assign the application information values to the license control
             licActCtrl.AppName = "DemoWinFormApp";
             licActCtrl.LicenseObjectType = typeof(DemoLicense.MyLicense);
-            licActCtrl.CertificatePublicKeyFilePath = Path.Combine(Application.StartupPath, "LicenseVerify.cer");
+            licActCtrl.CertificatePublicKeyData = this.CertificatePublicKeyData;
             //Display the device unique ID
             licActCtrl.ShowUID();
         }
