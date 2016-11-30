@@ -23,6 +23,7 @@ namespace DemoWinFormApp
 
         private void frmActivation_Load(object sender, EventArgs e)
         {
+
             //Assign the application information values to the license control
             licActCtrl.AppName = "DemoWinFormApp";
             licActCtrl.LicenseObjectType = typeof(DemoLicense.MyLicense);

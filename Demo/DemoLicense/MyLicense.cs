@@ -23,13 +23,44 @@ namespace DemoLicense
         [Category("License Options")]        
         [XmlElement("EnableFeature03")]
         [ShowInLicenseInfo(true, "Enable Feature 03", ShowInLicenseInfoAttribute.FormatType.String)]
-        public bool EnableFeature03 { get; set; }        
+        public bool EnableFeature03 { get; set; }
+
+        public MyLicense()
+        {
+            //Initialize app name for the license
+            this.AppName = "DemoWinFormApp";
+        }
 
         public override LicenseStatus DoExtraValidation(out string validationMsg)
         {
-            //Here, there is no extra validation, just return license is valid
+            LicenseStatus _licStatus = LicenseStatus.UNDEFINED;
             validationMsg = string.Empty;
-            return LicenseStatus.VALID;
+
+            switch (this.Type)
+            {
+                case LicenseTypes.Single:
+                    //For Single License, check whether UID is matched
+                    if (this.UID == LicenseHandler.GenerateUID(this.AppName))
+                    {
+                        _licStatus = LicenseStatus.VALID;
+                    }
+                    else
+                    {
+                        validationMsg = "The license is NOT for this copy!";
+                        _licStatus = LicenseStatus.INVALID;                    
+                    }
+                    break;
+                case LicenseTypes.Volume:
+                    //No UID checking for Volume License
+                    _licStatus = LicenseStatus.VALID;
+                    break;
+                default:
+                    validationMsg = "Invalid license";
+                    _licStatus= LicenseStatus.INVALID;
+                    break;
+            }
+
+            return _licStatus;
         }
     }
 }
