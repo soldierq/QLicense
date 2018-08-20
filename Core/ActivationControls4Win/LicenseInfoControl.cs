@@ -109,7 +109,7 @@ namespace QLicense.Windows.Controls
                 }
 
 
-                if (string.IsNullOrWhiteSpace(additionalInfo))
+                if (!string.IsNullOrWhiteSpace(additionalInfo))
                 {
                     _sb.Append(additionalInfo.Trim());
                 }
