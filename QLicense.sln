@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{9461EE4C-5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoLicense", "Demo\DemoLicense\DemoLicense.csproj", "{9F0BD6DF-F288-451B-828E-6431E5441DB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivationControls4Wpf", "ActivationControls4Wpf\ActivationControls4Wpf.csproj", "{8650B5B4-754B-4B77-A26F-08466854BE3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivationControls4Wpf", "Core\ActivationControls4Wpf\ActivationControls4Wpf.csproj", "{8650B5B4-754B-4B77-A26F-08466854BE3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
